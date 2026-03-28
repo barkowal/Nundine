@@ -17,7 +17,9 @@ public class SecurityConfig {
             HttpSecurity http,
             UserProvisioningFilter userProvisioningFilter) throws Exception{
         http.authorizeHttpRequests( authorize ->
-                authorize.anyRequest().authenticated())
+                authorize
+                        .requestMatchers("/api/v1/category").permitAll()
+                        .anyRequest().authenticated())
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
