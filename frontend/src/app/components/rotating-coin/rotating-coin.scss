@@ -1,0 +1,44 @@
+@use "variables";
+
+$frame-width: 45px;
+$frame-height: 48px;
+$frames: 8;
+$duration: 1.5s;
+$step-time: $duration / $frames;
+$sprite-path: variables.$RotatingCoin;
+
+#gold-coin {
+  width: $frame-width;
+  height: $frame-height;
+  background-image: $sprite-path;
+  background-repeat: no-repeat;
+
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+
+  animation: sprite-step $duration steps($frames) infinite;
+}
+
+@keyframes sprite-step {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: -($frame-width * $frames) 0;
+  }
+}
+
+.coin-container {
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .coin-text {
+    font-size: 20px;
+    font-weight: bold;
+    color: gold;
+    cursor: default;
+  }
+}

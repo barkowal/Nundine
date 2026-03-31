@@ -1,0 +1,15 @@
+<nav class="navigation-bar">
+  <div class="container">
+
+    <app-account-section></app-account-section>
+
+  <div>
+    @for (item of pages(); track $index){
+    <div class="navigation-list">
+      <app-navigation-button [pageName]="item"></app-navigation-button>
+    </div>
+    }
+  </div>
+
+  </div>
+</nav>

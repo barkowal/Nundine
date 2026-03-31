@@ -1,0 +1,29 @@
+@use "variables";
+
+.account-section {
+
+  .username {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    width: 192px;
+    height: 52px;
+    background-image: variables.$UsernameBanner;
+    background-repeat: no-repeat;
+    color: #660642;
+    cursor: default;
+  }
+
+  .portrait {
+    margin-left: calc((variables.$navigation-bar-width - variables.$portrait-width) / 2);
+    width: variables.$portrait-width;
+    height: variables.$portrait-height;
+    background-image: variables.$DefaultPortraitPath;
+    background-repeat: no-repeat;
+  }
+
+  .account-balance {
+    cursor: default;
+  }
+}

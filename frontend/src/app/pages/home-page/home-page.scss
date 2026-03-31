@@ -1,0 +1,22 @@
+@use "variables";
+
+.home-container {
+  width: variables.$page-width;
+  height: variables.$page-height;
+  background-image: variables.$HomePageBackground;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .text-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFF3B0;
+    width: 980px;
+    height: 620px;
+    background-image: variables.$DefaultSheetContainer;
+    background-repeat: no-repeat;
+  }
+}

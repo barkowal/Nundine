@@ -1,0 +1,17 @@
+@use "variables";
+
+#nav-btn {
+  height: 58px;
+  background-image: variables.$NavigationButtonPath ;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: left;
+  padding-left: 10px;
+  align-items: center;
+  cursor: pointer;
+
+  p {
+    font-weight: bold;
+    font-size: 18px;
+  }
+}

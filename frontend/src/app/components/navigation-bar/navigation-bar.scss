@@ -1,0 +1,23 @@
+@use "variables";
+
+nav {
+  width: variables.$navigation-bar-width;
+  height: variables.$navigation-bar-height;
+  overflow: hidden;
+  background-image: variables.$SidebarBackgroundPath;
+  background-repeat: no-repeat;
+  margin-top: calc((variables.$root-height - variables.$navigation-bar-height) /2);
+
+  .container {
+    margin-top: 14px;
+    height: 94%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+}
+
+
+.navigation-list {
+  padding-top: 5px;
+}
