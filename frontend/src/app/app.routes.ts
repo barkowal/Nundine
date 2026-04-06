@@ -1,3 +1,31 @@
 import { Routes } from '@angular/router';
+import { HomePage } from './pages/home-page/home-page';
+import { canActivateAuthRole } from './auth.guard';
+import { ForbiddenPage } from './pages/forbidden-page/forbidden-page';
+import { NotfoundPage } from './pages/notfound-page/notfound-page';
+import { InformationPage } from './pages/information-page/information-page';
 
-export const routes: Routes = [];
+export const routes: Routes = [
+  {
+    path: "",
+    component: HomePage,
+  },
+  {
+    path: "inventory",
+    component: HomePage,
+    canActivate: [canActivateAuthRole],
+    data: { role: "user" },
+  },
+  {
+    path: 'info',
+    component: InformationPage
+  },
+  {
+    path: 'forbidden',
+    component: ForbiddenPage
+  },
+  {
+    path: '**',
+    component: NotfoundPage
+  }
+];

@@ -6,7 +6,7 @@
   <div>
     @for (item of pages(); track $index){
     <div class="navigation-list">
-      <app-navigation-button [pageName]="item"></app-navigation-button>
+      <a routerLink="{{item.link}}"><app-navigation-button [pageName]="item.name"></app-navigation-button></a>
     </div>
     }
   </div>

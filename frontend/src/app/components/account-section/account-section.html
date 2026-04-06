@@ -1,14 +1,37 @@
 <div class="account-section">
 
-  <div class="portrait">
-  </div>
+  @if ( signedIn() ) {
+    <div class="default-character">
+    </div>
+  } @else {
+    <div class="empty-character">
+    </div>
+  }
 
   <div class="username">
-    <p>USERNAME</p>
+    <p>{{username()}}</p>
   </div>
+
 
   <div class="account-balance">
     <app-rotating-coin></app-rotating-coin>
+  </div>
+
+  <div class="options">
+
+    <a routerLink="info">
+      <div title="Information" class="info">
+      </div>
+    </a>
+
+    @if ( signedIn() ) {
+      <div title="Sign out" (click)="onLogout()" class="signed-in">
+      </div>
+    } @else{
+      <div title="Sign in" (click)="onLogin()" class="signed-out">
+      </div>
+    }
+
   </div>
 
 </div>

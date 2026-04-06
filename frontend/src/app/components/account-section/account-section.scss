@@ -1,5 +1,22 @@
 @use "variables";
 
+@mixin options-icon {
+  width: 32px;
+  height: 32px;
+  background-repeat: no-repeat;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+@mixin portrait-options {
+  margin-left: calc((variables.$navigation-bar-width - variables.$portrait-width) / 2);
+  width: variables.$portrait-width;
+  height: variables.$portrait-height;
+  background-repeat: no-repeat;
+}
+
 .account-section {
 
   .username {
@@ -15,13 +32,51 @@
     cursor: default;
   }
 
-  .portrait {
-    margin-left: calc((variables.$navigation-bar-width - variables.$portrait-width) / 2);
-    width: variables.$portrait-width;
-    height: variables.$portrait-height;
-    background-image: variables.$DefaultPortraitPath;
-    background-repeat: no-repeat;
+  .options {
+    width: 90%;
+    display: flex;
+    justify-content: right;
+    gap: 10px;
+
+    .info {
+      @include options-icon;
+      background-image: variables.$InfoIcon;
+
+      &:hover {
+        background-image: variables.$InfoIconHover;
+      }
+    }
+
+    .signed-out {
+      @include options-icon;
+      background-image: variables.$LoginIcon;
+
+      &:hover {
+        background-image: variables.$LoginIconHover;
+      }
+    }
+
+    .signed-in {
+      @include options-icon;
+      background-image: variables.$LogoutIcon;
+
+      &:hover {
+        background-image: variables.$LogoutIconHover;
+      }
+    }
+
   }
+
+  .default-character {
+    @include portrait-options;
+    background-image: variables.$DefaultCharacter;
+  }
+
+  .empty-character {
+    @include portrait-options;
+    background-image: variables.$EmptyCharacter;
+  }
+
 
   .account-balance {
     cursor: default;

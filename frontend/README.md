@@ -8,3 +8,4 @@ WIP
 - Banner: https://tiopalada.itch.io/tiny-rpg-dragon-regalia-gui
 - Man scrolls, man sheets and portrait border: https://tiopalada.itch.io/tiny-rpg-mana-soul-gui
 - ForestRoad: ansimuz, https://opengameart.org/content/sideview-fantasy-patreon-collection
+- Icons: https://nikoichu.itch.io/pixel-icons
