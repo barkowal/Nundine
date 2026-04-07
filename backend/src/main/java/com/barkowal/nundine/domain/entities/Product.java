@@ -21,6 +21,7 @@ import java.util.UUID;
 public class Product {
     @Id
     @Column(name = "id", updatable = false, nullable=false)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column(name = "name", nullable=false)
@@ -45,11 +46,11 @@ public class Product {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "supplier_id")
     private User supplier;
 
