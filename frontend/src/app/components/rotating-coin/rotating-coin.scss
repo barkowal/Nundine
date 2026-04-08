@@ -4,7 +4,7 @@ $frame-width: 45px;
 $frame-height: 48px;
 $frames: 8;
 $duration: 1.5s;
-$step-time: $duration / $frames;
+$step-time: calc($duration / $frames);
 $sprite-path: variables.$RotatingCoin;
 
 #gold-coin {
