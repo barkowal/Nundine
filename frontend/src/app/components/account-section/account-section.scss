@@ -47,6 +47,15 @@
       }
     }
 
+    .sellers-store {
+      @include options-icon;
+      background-image: variables.$StoreIcon;
+
+      &:hover {
+        background-image: variables.$StoreIconHover;
+      }
+    }
+
     .signed-out {
       @include options-icon;
       background-image: variables.$LoginIcon;

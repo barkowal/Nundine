@@ -3,6 +3,7 @@ package com.barkowal.nundine.controllers;
 import com.barkowal.nundine.domain.dtos.category.CategoryMapper;
 import com.barkowal.nundine.domain.dtos.category.CreateCategoryRequestDTO;
 import com.barkowal.nundine.domain.dtos.category.CreateCategoryResponseDTO;
+import com.barkowal.nundine.domain.dtos.category.GetCategoryResponseDTO;
 import com.barkowal.nundine.domain.entities.Category;
 import com.barkowal.nundine.services.CategoryService;
 import jakarta.validation.Valid;
@@ -12,9 +13,12 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(path = "/category")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class CategoryController {
 
     private final CategoryService categoryService;
@@ -29,6 +33,12 @@ public class CategoryController {
         CreateCategoryResponseDTO res = categoryMapper.toCreateCategoryResponseDTO(category);
 
         return ResponseEntity.ok(res);
+    }
 
+    @GetMapping()
+    public ResponseEntity<List<GetCategoryResponseDTO>> getCategories(){
+        List<Category> categories = categoryService.getCategories();
+        List<GetCategoryResponseDTO> response = categories.stream().map(categoryMapper::toGetCategoryResponseDTO).toList();
+        return ResponseEntity.ok(response);
     }
 }

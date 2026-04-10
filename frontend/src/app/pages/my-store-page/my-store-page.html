@@ -1,0 +1,49 @@
+<section>
+
+  <div class="panel-container">
+
+    <div class="store-header">MY STORE</div>
+
+    <div class="options">
+
+      <div class="selectors">
+
+        <div class="selector-header">
+          <h1>SELECT OPTION</h1>
+        </div>
+
+        <div class="add-product" (click)="showOption('ADD')">
+          <div class="tile">
+            ADD PRODUCT
+          </div>
+        </div>
+
+        <div class="update-product">
+          <div class="tile">
+            UPDATE PRODUCT
+          </div>
+        </div>
+
+        <div class="show-product">
+          <div class="tile">
+            SHOW PRODUCTS
+          </div>
+        </div>
+
+        <div class="show-coins">
+          <div class="tile">
+            SHOW EARNING
+          </div>
+        </div>
+
+      </div>
+
+      <div class="selected-option">
+        <ng-template #optionContainer></ng-template>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>

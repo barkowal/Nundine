@@ -24,6 +24,13 @@
       </div>
     </a>
 
+    @if ( seller() ) {
+      <a routerLink="mystore">
+        <div title="Manage your store"  class="sellers-store">
+        </div>
+      </a>
+    }
+
     @if ( signedIn() ) {
       <div title="Sign out" (click)="onLogout()" class="signed-in">
       </div>

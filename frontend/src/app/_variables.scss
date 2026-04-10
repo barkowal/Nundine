@@ -8,6 +8,12 @@ $navigation-bar-height: 680px;
 $page-width: 1020px;
 $page-height: 660px;
 
+$container-width: 980px;
+$container-height: 620px;
+
+$large-header-width: 980px;
+$large-header-height: 66px;
+
 $portrait-width: 152px;
 $portrait-height: 148px;
 
@@ -21,13 +27,26 @@ $NavigationButtonPath: url("/assets/ScrollButton.png");
 $DefaultCharacter: url("/assets/DefaultCharacter.png");
 $EmptyCharacter: url("/assets/EmptyCharacter.png");
 $UsernameBanner: url("/assets/DragonBanner.png");
+$LargeHeader: url("/assets/ManaSoulHeaderLarge.png");
 $RotatingCoin: url("/assets/RotatingCoin.png");
 $HomePageBackground: url("/assets/ForestRoad.png");
 $DefaultPageBackground: url("/assets/ForestRoad.png"); // TODO: find/make backgrounds for different pages
 $DefaultSheetContainer: url("/assets/ManaSlicesSheet.png");
+$PanelContainerBackground: url("/assets/ManaSoulSliceLarge.png");
+
+// Icons
 $LoginIcon: url("/assets/icons/LoginIcon.png");
 $LoginIconHover: url("/assets/icons/LoginIconHover.png");
 $LogoutIcon: url("/assets/icons/LogoutIcon.png");
 $LogoutIconHover: url("/assets/icons/LogoutIconHover.png");
 $InfoIcon: url("/assets/icons/InfoIcon.png");
 $InfoIconHover: url("/assets/icons/InfoIconHover.png");
+$StoreIcon: url("/assets/icons/StoreIcon.png");
+$StoreIconHover: url("/assets/icons/StoreIconHover.png");
+
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

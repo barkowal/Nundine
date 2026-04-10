@@ -1,0 +1,122 @@
+@use "variables";
+
+@mixin tile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: darkslateblue;
+  font-size: 24px;
+  text-align: center;
+  width: 128px;
+  height: 128px;
+  cursor: pointer;
+
+  background-image: url("/assets/ManaTileA.png");
+
+  &:hover {
+    background-image: url("/assets/ManaTileAHover.png")
+  }
+}
+
+section {
+  width: variables.$page-width;
+  height: variables.$page-height;
+  background-image: variables.$HomePageBackground;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .panel-container {
+    color: #FFF3B0;
+    width: variables.$container-width;
+    height: variables.$container-height;
+    background-image: variables.$PanelContainerBackground;
+    background-repeat: no-repeat;
+
+    .store-header {
+      grid-area: header;
+      font-size: 32px;
+      line-height: variables.$large-header-height;
+      text-align: center;
+      width: variables.$large-header-width;
+      height: variables.$large-header-height;
+      background-image: variables.$LargeHeader;
+      background-repeat: no-repeat;
+    }
+
+    .options {
+      display: flex;
+      gap: 10px;
+      flex-direction: row;
+      margin: auto;
+      width: 85%;
+      height: calc(85% - variables.$large-header-height);
+
+      .selectors {
+        display: grid;
+        gap: 10px;
+        grid-template-areas:
+          "header header"
+          "tileA tileB"
+          "tileC tileD";
+
+        .selector-header {
+          grid-area: header;
+          @include variables.flex-center;
+        }
+
+        .add-product {
+          grid-area: tileA;
+          @include variables.flex-center;
+
+          .tile {
+            @include tile;
+          }
+        }
+
+        .update-product {
+          grid-area: tileB;
+
+          @include variables.flex-center;
+
+          .tile {
+            @include tile;
+          }
+        }
+
+        .show-product {
+          grid-area: tileC;
+
+          @include variables.flex-center;
+
+          .tile {
+            @include tile;
+          }
+        }
+
+        .show-coins {
+          grid-area: tileD;
+
+          @include variables.flex-center;
+
+          .tile {
+            @include tile;
+          }
+        }
+
+      }
+
+      .selected-option {
+        @include variables.flex-center;
+        margin-top: 60px;
+        margin-left: 20px;
+        width: 520px;
+        height: 400px;
+        background-image: url("/assets/Kenney_tile_18.png");
+        background-repeat: no-repeat;
+      }
+    }
+
+  }
+}

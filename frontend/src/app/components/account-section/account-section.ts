@@ -13,6 +13,7 @@ export class AccountSection implements OnInit {
   private readonly keycloak = inject(Keycloak);
   signedIn = signal(true);
   username = signal("");
+  seller = signal(false);
 
 
   constructor() {
@@ -31,6 +32,8 @@ export class AccountSection implements OnInit {
         this.username.update(() => name.toUpperCase());
       }
     });
+
+    this.seller.set(this.keycloak.hasRealmRole("seller"));
   }
 
   onLogin() {

@@ -1,0 +1,61 @@
+form {
+  margin: 0 auto;
+  color: #111827;
+  display: grid;
+  gap: 12px;
+  padding: 8px;
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    align-items: center;
+    gap: 12px;
+
+    label {
+      font-size: 16px;
+      padding-right: 4px;
+      text-align: left;
+    }
+  }
+
+  input[type="submit"] {
+    font-family: "Mana Trunk";
+    margin: auto;
+    width: 200px;
+    height: 32px;
+    background-color: #c58747;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #fbe4af;
+  }
+
+  select,
+  textarea,
+  input[type="text"],
+  input[type="number"] {
+    background-color: #fbe4af;
+  }
+
+  textarea {
+    resize: vertical;
+    max-height: 100px;
+  }
+
+  input[type="file"] {
+    max-width: 200px;
+  }
+
+  .msg {
+    height: 32px;
+    text-align: center;
+
+    .error {
+      color: red;
+    }
+
+    .success {
+      color: green;
+    }
+  }
+
+}

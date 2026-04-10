@@ -1,6 +1,7 @@
 package com.barkowal.nundine.services.impl;
 
 import com.barkowal.nundine.domain.dtos.category.CreateCategoryRequest;
+import com.barkowal.nundine.domain.dtos.category.GetCategoryResponseDTO;
 import com.barkowal.nundine.domain.entities.Category;
 import com.barkowal.nundine.exceptions.CategoryNotFoundException;
 import com.barkowal.nundine.repositories.CategoryRepository;
@@ -8,6 +9,7 @@ import com.barkowal.nundine.services.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -36,5 +38,10 @@ public class CategoryServiceImpl implements CategoryService {
         newCategory.setParent(parentCategory);
 
         return categoryRepository.save(newCategory);
+    }
+
+    @Override
+    public List<Category> getCategories() {
+        return categoryRepository.findAllByOrderByName();
     }
 }
