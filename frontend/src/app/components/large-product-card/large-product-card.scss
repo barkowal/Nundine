@@ -1,0 +1,56 @@
+@use "variables";
+$product-width: 64px;
+$product-height: 64px;
+$product-padding: 4px;
+$card-background: #b88f4f;
+$card-border: #7a5f35;
+
+.large-product-card {
+  display: grid;
+  grid-template-areas:
+    "header price"
+    "image description"
+    "details details";
+  grid-template-columns: $product-width auto;
+  gap: 4px;
+
+  width: 320px;
+  margin: auto;
+  border: 4px solid $card-border;
+  border-radius: 6px;
+  background-color: $card-background;
+  padding: 10px;
+
+  .name {
+    grid-area: header;
+    text-align: left;
+  }
+
+  .price {
+    grid-area: price;
+    text-align: right;
+  }
+
+  img {
+    @include variables.pixelated;
+    grid-area: image;
+    width: $product-width;
+    height: $product-height;
+  }
+
+
+  .description {
+    grid-area: description;
+    max-height: $product-height;
+    overflow: scroll;
+  }
+
+  .detailed-info {
+    grid-area: details;
+
+    span {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}

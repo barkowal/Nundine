@@ -1,0 +1,29 @@
+<div class="large-product-card">
+
+  <h1 class="name">{{product().name}}</h1>
+  <h1 class="price">{{product().currentPrice}}g</h1>
+
+  <img src="{{product().image}}" alt="Product image" />
+  <span class="description">{{product().description}}</span>
+
+
+  <div class="detailed-info">
+    <span>
+      <p>Category:</p>
+      <p>{{product().category.name}}</p>
+    </span>
+    <span>
+      <p>User: </p>
+      <p>{{product().user.name}}</p>
+    </span>
+    <span>
+      <p>Created: </p>
+      <p>{{product().createdAt}}</p>
+    </span>
+    <span>
+      <p>Updated: </p>
+      <p>{{product().updatedAt}}</p>
+    </span>
+  </div>
+
+</div>

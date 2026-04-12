@@ -1,0 +1,44 @@
+<div class="section">
+
+  <div class="search-bar">
+    <!-- TODO: make search bar -->
+    SEARCH:
+    <input type="text" />
+  </div>
+
+
+  @if (selectedProduct()){
+
+    <app-large-product-card [product]="selectedProduct()!"/>
+
+  <div class="buttons">
+
+    <div class="return-button" (click)=closeCard()>
+      CLOSE
+    </div>
+
+    <div class="update-button" (click)="updateProduct()">
+      UPDATE
+    </div>
+
+    <div class="delete-button" (click)="deleteProduct()">
+      DELETE
+    </div>
+
+  </div>
+
+  } @else {
+
+  <div class="cards">
+
+    @for (product of products(); track $index){
+      <span (click)=showDetails($index)>
+        <app-small-product-card [product]="product" />
+      </span>
+    }
+
+  </div>
+
+    }
+
+</div>

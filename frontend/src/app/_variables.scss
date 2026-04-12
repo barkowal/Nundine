@@ -50,3 +50,8 @@ $StoreIconHover: url("/assets/icons/StoreIconHover.png");
   justify-content: center;
   align-items: center;
 }
+
+@mixin pixelated {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
