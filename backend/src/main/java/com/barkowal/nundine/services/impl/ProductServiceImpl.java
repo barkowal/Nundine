@@ -56,4 +56,9 @@ public class ProductServiceImpl implements ProductService {
         spec = spec.and(ProductSpecs.hasUserId(userId));
         return productRepository.findAll(spec);
     }
+
+    @Override
+    public void deleteProduct(UUID productId, UUID userId){
+        this.productRepository.findByIdAndSupplierId(productId, userId).ifPresent(this.productRepository::delete);
+    }
 }

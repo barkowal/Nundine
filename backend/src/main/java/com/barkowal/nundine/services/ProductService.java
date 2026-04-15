@@ -9,4 +9,5 @@ import java.util.UUID;
 public interface ProductService {
     public Product createProduct(UUID supplier, CreateProductRequest createProductRequest);
     public List<Product> getProducts(UUID userId);
+    public void deleteProduct(UUID productId, UUID userId);
 }

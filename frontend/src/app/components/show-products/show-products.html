@@ -9,6 +9,8 @@
 
   @if (selectedProduct()){
 
+  <div class="large-card">
+
     <app-large-product-card [product]="selectedProduct()!"/>
 
   <div class="buttons">
@@ -24,6 +26,14 @@
     <div class="delete-button" (click)="deleteProduct()">
       DELETE
     </div>
+
+  </div>
+
+  <div class="info">
+    <span [ngClass]="requestError()?'error':'success'">
+      {{successMsg()}}
+    </span>
+  </div>
 
   </div>
 

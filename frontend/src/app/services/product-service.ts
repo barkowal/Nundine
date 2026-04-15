@@ -21,4 +21,8 @@ export class ProductService {
   getUserProducts(userId: string | null): Observable<any> {
     return this.http.get(`${this.baseUrl}/product?userId=${userId}`);
   }
+
+  deleteProduct(productId: string) {
+    return this.http.delete(`${this.baseUrl}/product/${productId}`);
+  }
 }

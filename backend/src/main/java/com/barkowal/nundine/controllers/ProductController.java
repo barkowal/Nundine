@@ -10,6 +10,7 @@ import com.barkowal.nundine.domain.dtos.user.GetUserResponseDTO;
 import com.barkowal.nundine.domain.dtos.user.UserMapper;
 import com.barkowal.nundine.domain.entities.Product;
 import com.barkowal.nundine.services.ProductService;
+import com.nimbusds.jwt.JWT;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -57,5 +58,15 @@ public class ProductController {
         Product res = productService.createProduct(userId, createProductRequest);
 
         return ResponseEntity.ok(res);
+    }
+
+    @DeleteMapping(path = "/{productId}")
+    public ResponseEntity<Void> deleteProduct(
+            @AuthenticationPrincipal Jwt jwt,
+            @PathVariable UUID productId
+    ){
+        UUID userId = JWTUtil.parseUserId(jwt);
+        this.productService.deleteProduct(productId, userId);
+        return ResponseEntity.noContent().build();
     }
 }
