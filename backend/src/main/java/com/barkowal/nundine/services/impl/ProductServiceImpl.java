@@ -4,6 +4,7 @@ import com.barkowal.nundine.domain.dtos.product.CreateProductRequest;
 import com.barkowal.nundine.domain.entities.Category;
 import com.barkowal.nundine.domain.entities.Product;
 import com.barkowal.nundine.domain.entities.User;
+import com.barkowal.nundine.domain.specifications.ProductSpecs;
 import com.barkowal.nundine.exceptions.CategoryNotFoundException;
 import com.barkowal.nundine.exceptions.UserNotFoundException;
 import com.barkowal.nundine.repositories.CategoryRepository;
@@ -12,6 +13,7 @@ import com.barkowal.nundine.repositories.UserRepository;
 import com.barkowal.nundine.services.ProductService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -49,7 +51,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getProducts() {
-        return productRepository.findAll();
+    public List<Product> getProducts(UUID userId) {
+        Specification<Product> spec = (root, query, cb) -> null;
+        spec = spec.and(ProductSpecs.hasUserId(userId));
+        return productRepository.findAll(spec);
     }
 }

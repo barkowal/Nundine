@@ -32,8 +32,11 @@ public class ProductController {
     private final CategoryMapper categoryMapper;
 
     @GetMapping()
-    public ResponseEntity<List<GetProductResponseDTO>> getProducts(){
-        List<Product> products = productService.getProducts();
+    public ResponseEntity<List<GetProductResponseDTO>> getProducts(
+            @RequestParam(required = false, name = "userId") UUID userId
+    ){
+        System.out.println(userId);
+        List<Product> products = productService.getProducts(userId);
         List<GetProductResponseDTO> response = products.stream()
                 .map(product -> {
                     GetUserResponseDTO userResponse = userMapper.toGetUserResponseDTO(product.getSupplier());

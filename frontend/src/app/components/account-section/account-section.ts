@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { RotatingCoin } from '../rotating-coin/rotating-coin';
-import Keycloak from 'keycloak-js';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../../services/auth-service';
 
 @Component({
   selector: 'app-account-section',
@@ -10,42 +10,33 @@ import { RouterLink } from '@angular/router';
   styleUrl: './account-section.scss',
 })
 export class AccountSection implements OnInit {
-  private readonly keycloak = inject(Keycloak);
+  private readonly authService = inject(AuthService);
   signedIn = signal(true);
   username = signal("");
   seller = signal(false);
-
 
   constructor() {
   }
 
   async ngOnInit(): Promise<void> {
-    if (this.keycloak == null) return;
+    if (this.authService == null) return;
 
-    this.signedIn.update(() => this.keycloak.authenticated);
+    this.signedIn.update(() => this.authService.isAuthenticated());
 
-    if (!this.keycloak.authenticated) return;
-
-    this.keycloak.loadUserInfo().then(data => {
-      if (data["preferred_username"] != null) {
-        const name: string = data["preferred_username"];
-        this.username.update(() => name.toUpperCase());
-      }
+    this.username.update(() => {
+      const name = this.authService.getUsername();
+      return name ? name.toUpperCase() : "";
     });
 
-    this.seller.set(this.keycloak.hasRealmRole("seller"));
+    this.seller.set(this.authService.hasRealmRole("seller"));
   }
 
   onLogin() {
-    if (!this.keycloak?.authenticated) {
-      this.keycloak.login();
-    }
+    this.authService.login();
   }
 
   onLogout() {
-    if (this.keycloak?.authenticated) {
-      this.keycloak.logout();
-    }
+    this.authService.logout();
   }
 
 }

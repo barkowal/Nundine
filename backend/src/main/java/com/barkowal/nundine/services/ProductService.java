@@ -8,5 +8,5 @@ import java.util.UUID;
 
 public interface ProductService {
     public Product createProduct(UUID supplier, CreateProductRequest createProductRequest);
-    public List<Product> getProducts();
+    public List<Product> getProducts(UUID userId);
 }

@@ -3,6 +3,7 @@ import { ProductService } from '../../services/product-service';
 import { Product } from '../../models/Product';
 import { SmallProductCard } from '../small-product-card/small-product-card';
 import { LargeProductCard } from '../large-product-card/large-product-card';
+import { AuthService } from '../../services/auth-service';
 
 @Component({
   selector: 'app-show-products',
@@ -16,8 +17,11 @@ export class ShowProducts implements OnInit {
   products = signal<Product[]>([]);
   selectedProduct = signal<Product | null>(null);
 
+  private readonly authService = inject(AuthService);
+
   ngOnInit() {
-    this.productService.getProducts()
+    let userId: string = this.authService.getUserId();
+    this.productService.getUserProducts(userId)
       .subscribe(data => {
 
         // TODO: this is ugly, fix parsing products
