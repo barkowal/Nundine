@@ -1,6 +1,7 @@
 import { Component, inject, Type, viewChild, ViewContainerRef } from '@angular/core';
 import { AddProductForm } from '../../components/add-product-form/add-product-form';
 import { ShowProducts } from '../../components/show-products/show-products';
+import { ProductForm } from '../../components/product-form/product-form';
 
 @Component({
   selector: 'app-my-store-page',
@@ -12,6 +13,7 @@ export class MyStorePage {
   protected optionContainer = viewChild('optionContainer', { read: ViewContainerRef });
   private optionMap: Record<string, Type<any>> = {
     "ADD": AddProductForm,
+    "UPDATE": ProductForm,
     "SHOW": ShowProducts,
   }
 

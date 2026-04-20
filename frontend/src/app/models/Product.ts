@@ -20,3 +20,12 @@ export type CreateProductRequest = {
   currentPrice: number,
   category: string
 }
+
+export type UpdateProductRequest = {
+  productId: string,
+  name: string,
+  description: string,
+  image: string,
+  currentPrice: number,
+  category: string
+}

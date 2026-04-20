@@ -6,49 +6,56 @@
     <input type="text" />
   </div>
 
+  @if(selectedOption() == OPTIONS.select){
 
-  @if (selectedProduct()){
+    <div class="cards">
 
-  <div class="large-card">
+      @for (product of products(); track $index){
+        <span (click)=showDetails($index)>
+          <app-small-product-card [product]="product" />
+        </span>
+      }
 
-    <app-large-product-card [product]="selectedProduct()!"/>
+    </div>
 
-  <div class="buttons">
+  }
+  @else if (selectedOption() == OPTIONS.details){
+
+    <div class="large-card">
+
+      <app-large-product-card [product]="selectedProduct()!"/>
+
+      <div class="buttons">
+
+        <div class="return-button" (click)=closeCard()>
+          CLOSE
+        </div>
+
+        <div class="update-button" (click)="updateProduct()">
+          UPDATE
+        </div>
+
+        <div class="delete-button" (click)="deleteProduct()">
+          DELETE
+        </div>
+
+      </div>
+
+      <div class="info">
+        <span [ngClass]="requestError()?'error':'success'">
+          {{successMsg()}}
+        </span>
+      </div>
+
+    </div>
+
+  }
+  @else if (selectedOption() == OPTIONS.update){
+    <app-product-form [product]="selectedProduct()"  (onUpdate)="onProductUpdate()"/>
 
     <div class="return-button" (click)=closeCard()>
       CLOSE
     </div>
-
-    <div class="update-button" (click)="updateProduct()">
-      UPDATE
-    </div>
-
-    <div class="delete-button" (click)="deleteProduct()">
-      DELETE
-    </div>
-
-  </div>
-
-  <div class="info">
-    <span [ngClass]="requestError()?'error':'success'">
-      {{successMsg()}}
-    </span>
-  </div>
-
-  </div>
-
-  } @else {
-
-  <div class="cards">
-
-    @for (product of products(); track $index){
-      <span (click)=showDetails($index)>
-        <app-small-product-card [product]="product" />
-      </span>
-    }
-
-  </div>
-
-    }
+  }
 
 </div>

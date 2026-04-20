@@ -1,0 +1,43 @@
+<form [formGroup]="submitForm" (submit)="submitProduct()">
+
+  <div class="form-row">
+    <label for="name">NAME:</label>
+    <input type="text" id="name" name="name" formControlName="name">
+  </div>
+
+  <div class="form-row">
+    <label for="description">DESCRIPTION:</label>
+    <textarea id="description" name="description" formControlName="description"></textarea>
+  </div>
+
+  <div class="form-row">
+    <label for="image">IMAGE:</label>
+    <div class="image-input">
+      <img src="{{image()}}" alt="Product image"/>
+      <input type="file" id="image" name="image" formControlName="image" accept="image/*" (change)="handleImage($event)" >
+    </div>
+  </div>
+
+  <div class="form-row">
+    <label for="price">PRICE:</label>
+    <input type="number" id="price" name="price" formControlName="price">
+  </div>
+
+  <div class="form-row">
+    <label for="category">CATEGORY:</label>
+    <select id="category" name="category" formControlName="category">
+      @for (category of categories(); track $index){
+      <option value={{category.id}}>{{category.name}}</option>
+      }
+    </select>
+  </div>
+
+  <input type="submit" value="UPDATE" />
+
+  <div class="msg">
+    <span [ngClass]="requestError()?'error':'success'">
+      {{successMsg()}}
+    </span>
+  </div>
+
+</form>

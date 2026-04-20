@@ -56,17 +56,6 @@ $blue-button-border: #557285;
     display: flex;
     justify-content: space-between;
 
-    .return-button {
-      @include button-style($blue-button, $blue-button-border);
-    }
-
-    .update-button {
-      @include button-style($green-button, $green-button-border);
-    }
-
-    .delete-button {
-      @include button-style($red-button, $red-button-border);
-    }
   }
 
   .info {
@@ -85,4 +74,16 @@ $blue-button-border: #557285;
       color: $green-button;
     }
   }
+}
+
+.return-button {
+  @include button-style($blue-button, $blue-button-border);
+}
+
+.update-button {
+  @include button-style($green-button, $green-button-border);
+}
+
+.delete-button {
+  @include button-style($red-button, $red-button-border);
 }

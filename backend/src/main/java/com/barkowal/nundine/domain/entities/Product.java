@@ -9,6 +9,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -53,6 +55,9 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "supplier_id")
     private User supplier;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductPriceHistory> productPriceHistory = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {

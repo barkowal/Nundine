@@ -1,15 +1,19 @@
 package com.barkowal.nundine.services.impl;
 
 import com.barkowal.nundine.domain.dtos.product.CreateProductRequest;
+import com.barkowal.nundine.domain.dtos.product.UpdateProductRequest;
 import com.barkowal.nundine.domain.entities.Category;
 import com.barkowal.nundine.domain.entities.Product;
 import com.barkowal.nundine.domain.entities.User;
 import com.barkowal.nundine.domain.specifications.ProductSpecs;
 import com.barkowal.nundine.exceptions.CategoryNotFoundException;
+import com.barkowal.nundine.exceptions.ProductNotFoundException;
+import com.barkowal.nundine.exceptions.UpdateProductException;
 import com.barkowal.nundine.exceptions.UserNotFoundException;
 import com.barkowal.nundine.repositories.CategoryRepository;
 import com.barkowal.nundine.repositories.ProductRepository;
 import com.barkowal.nundine.repositories.UserRepository;
+import com.barkowal.nundine.services.ProductPriceHistoryService;
 import com.barkowal.nundine.services.ProductService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +29,7 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
+    private final ProductPriceHistoryService productPriceHistoryService;
 
     @Override
     @Transactional
@@ -55,6 +60,39 @@ public class ProductServiceImpl implements ProductService {
         Specification<Product> spec = (root, query, cb) -> null;
         spec = spec.and(ProductSpecs.hasUserId(userId));
         return productRepository.findAll(spec);
+    }
+
+    @Override
+    @Transactional
+    public Product updateProduct(UUID supplierID, UpdateProductRequest updateProductRequest) {
+        Category category = categoryRepository.findById(updateProductRequest.category())
+                .orElseThrow(() -> new CategoryNotFoundException(
+                        String.format("Category with ID '%s' not found", updateProductRequest.category()))
+                );
+
+        UUID productId = updateProductRequest.id();
+        if(productId == null){
+            throw new UpdateProductException("Product id cannot be null.");
+        }
+
+        Product existingProduct = productRepository
+                .findByIdAndSupplierId(productId, supplierID)
+                .orElseThrow(() -> new ProductNotFoundException(
+                        String.format("Product with ID '%s' does not exist", productId))
+                );
+
+        // if price changes it should create a new record in price history
+        if(!existingProduct.getCurrentPrice().equals(updateProductRequest.currentPrice())){
+            productPriceHistoryService.addNewProductPriceRecord(existingProduct);
+        }
+
+        existingProduct.setName(updateProductRequest.name());
+        existingProduct.setDescription(updateProductRequest.description());
+        existingProduct.setImage(updateProductRequest.image());
+        existingProduct.setCurrentPrice(updateProductRequest.currentPrice());
+        existingProduct.setCategory(category);
+
+        return productRepository.save(existingProduct);
     }
 
     @Override

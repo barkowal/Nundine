@@ -12,4 +12,11 @@ public interface ProductMapper {
             GetCategoryResponseDTO category,
             GetUserResponseDTO user
     );
+
+    UpdateProductRequest toUpdateProductRequest(UpdateProductRequestDTO dto);
+    UpdateProductResponseDTO toUpdateProductResponseDTO(
+            Product product,
+            GetCategoryResponseDTO category,
+            GetUserResponseDTO user
+    );
 }

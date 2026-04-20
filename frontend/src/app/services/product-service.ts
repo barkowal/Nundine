@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CreateProductRequest } from '../models/Product';
+import { CreateProductRequest, UpdateProductRequest } from '../models/Product';
 
 @Injectable({
   providedIn: 'root',
@@ -20,6 +20,10 @@ export class ProductService {
 
   getUserProducts(userId: string | null): Observable<any> {
     return this.http.get(`${this.baseUrl}/product?userId=${userId}`);
+  }
+
+  updateProduct(productId: string, req: UpdateProductRequest): Observable<any> {
+    return this.http.put(`${this.baseUrl}/product/${productId}`, req);
   }
 
   deleteProduct(productId: string) {

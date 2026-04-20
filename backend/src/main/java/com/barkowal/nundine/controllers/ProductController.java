@@ -2,10 +2,7 @@ package com.barkowal.nundine.controllers;
 
 import com.barkowal.nundine.domain.dtos.category.CategoryMapper;
 import com.barkowal.nundine.domain.dtos.category.GetCategoryResponseDTO;
-import com.barkowal.nundine.domain.dtos.product.CreateProductRequest;
-import com.barkowal.nundine.domain.dtos.product.CreateProductRequestDTO;
-import com.barkowal.nundine.domain.dtos.product.GetProductResponseDTO;
-import com.barkowal.nundine.domain.dtos.product.ProductMapper;
+import com.barkowal.nundine.domain.dtos.product.*;
 import com.barkowal.nundine.domain.dtos.user.GetUserResponseDTO;
 import com.barkowal.nundine.domain.dtos.user.UserMapper;
 import com.barkowal.nundine.domain.entities.Product;
@@ -36,7 +33,6 @@ public class ProductController {
     public ResponseEntity<List<GetProductResponseDTO>> getProducts(
             @RequestParam(required = false, name = "userId") UUID userId
     ){
-        System.out.println(userId);
         List<Product> products = productService.getProducts(userId);
         List<GetProductResponseDTO> response = products.stream()
                 .map(product -> {
@@ -56,6 +52,23 @@ public class ProductController {
         UUID userId = JWTUtil.parseUserId(jwt);
         CreateProductRequest createProductRequest = productMapper.toCreateProductRequest(createProductRequestDTO);
         Product res = productService.createProduct(userId, createProductRequest);
+
+        return ResponseEntity.ok(res);
+    }
+
+    @PutMapping(path = "/{productId}")
+    public ResponseEntity<UpdateProductResponseDTO> updateProduct(
+            @AuthenticationPrincipal Jwt jwt,
+            @Valid @RequestBody UpdateProductRequestDTO updateProductRequestDTO
+    ){
+
+        UUID supplierId = JWTUtil.parseUserId(jwt);
+        UpdateProductRequest updateProductRequest = productMapper.toUpdateProductRequest(updateProductRequestDTO);
+        Product updatedProduct = productService.updateProduct(supplierId, updateProductRequest);
+
+        GetUserResponseDTO userResponse = userMapper.toGetUserResponseDTO(updatedProduct.getSupplier());
+        GetCategoryResponseDTO categoryResponseDTO = categoryMapper.toGetCategoryResponseDTO(updatedProduct.getCategory());
+        UpdateProductResponseDTO res = productMapper.toUpdateProductResponseDTO(updatedProduct, categoryResponseDTO, userResponse);
 
         return ResponseEntity.ok(res);
     }
