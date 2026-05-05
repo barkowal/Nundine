@@ -9,6 +9,9 @@
         <th class="col-name">PRODUCT</th>
         <th class="col-desc">DESCRIPTION</th>
         <th class="col-price">PRICE</th>
+        @if (isAuthenticated()){
+          <th class="col-operation">OPERATION</th>
+        }
       </tr>
     </thead>
     <tbody>
@@ -24,6 +27,9 @@
           </td>
           <td class="col-desc">{{product.description}}</td>
           <td class="col-price">{{product.currentPrice}}g</td>
+          @if (isAuthenticated()){
+            <td class="col-operation">BUY</td>
+          }
         </tr>
         }
     </tbody>

@@ -29,4 +29,8 @@ export class ProductService {
   deleteProduct(productId: string) {
     return this.http.delete(`${this.baseUrl}/product/${productId}`);
   }
+
+  // TODO:
+  // buyProduct(productId: string): Observable<any> {
+  // }
 }

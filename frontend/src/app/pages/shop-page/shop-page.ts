@@ -4,6 +4,7 @@ import { Category } from '../../models/Category';
 import { FormsModule } from '@angular/forms';
 import { Product } from '../../models/Product';
 import { ProductService } from '../../services/product-service';
+import { AuthService } from '../../services/auth-service';
 
 @Component({
   selector: 'app-shop-page',
@@ -12,12 +13,13 @@ import { ProductService } from '../../services/product-service';
   styleUrl: './shop-page.scss',
 })
 export class ShopPage implements OnInit {
-
-  categoryService: CategoryService = inject(CategoryService);
-  productService: ProductService = inject(ProductService);
+  private authService = inject(AuthService);
+  private categoryService: CategoryService = inject(CategoryService);
+  private productService: ProductService = inject(ProductService);
 
   categories = signal<Category[]>([]);
   products = signal<Product[]>([]);
+  isAuthenticated = signal<boolean>(false);
 
   ngOnInit() {
     this.categoryService.getCategories()
@@ -29,6 +31,11 @@ export class ShopPage implements OnInit {
       .subscribe(data => {
         this.products.set(data);
       });
+
+    this.isAuthenticated.set(this.authService.isAuthenticated());
+  }
+
+  onBuy() {
   }
 
 }

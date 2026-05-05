@@ -1,7 +1,6 @@
 package com.barkowal.nundine.filters;
 
-import com.barkowal.nundine.domain.entities.User;
-import com.barkowal.nundine.repositories.UserRepository;
+import com.barkowal.nundine.services.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,7 +19,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UserProvisioningFilter extends OncePerRequestFilter {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -31,15 +30,8 @@ public class UserProvisioningFilter extends OncePerRequestFilter {
                 && authentication.getPrincipal() instanceof Jwt jwt) {
             UUID userId = UUID.fromString(jwt.getSubject());
 
-            if(!userRepository.existsById(userId)){
-
-                User user = new User();
-                user.setId(userId);
-                user.setName(jwt.getClaimAsString("preferred_username"));
-                user.setEmail(jwt.getClaimAsString("email"));
-
-                userRepository.save(user);
-
+            if(!userService.userExists(userId)){
+                userService.createUser(userId, jwt);
             }
 
         }
