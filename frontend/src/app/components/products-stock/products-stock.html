@@ -1,0 +1,60 @@
+<div class="products-table">
+  <table>
+    <thead>
+      <tr>
+        <th class="col-image"></th>
+        <th class="col-name">PRODUCT</th>
+        <th class="col-price">PRICE</th>
+        <th class="col-quantity">QUANTITY</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (product of productsStock(); track $index){
+      <tr>
+        <td class="col-image">
+          <img src="{{product.image}}" width="32" height="32" alt="Product image" />
+        </td>
+        <td class="col-name">
+          <div class="name-row">
+            <span class="title">{{product.name}}</span>
+          </div>
+        </td>
+
+        <td class="col-price">{{product.currentPrice}}g</td>
+
+        <td class="col-quantity">
+
+          <form (submit)="submitProductStock($index)" #postForm="ngForm">
+
+            <div class="number-control">
+
+              <div class="quantity-input">
+                <div class="btn decrement" aria-label="Decrease" (click)=onDecrement($index)>
+                </div>
+
+                <input class="number-input" type="number" value={{product.quantity}}  (input)="onInputChange($event, $index)" min="0" max="9999" />
+
+                <div class="btn increment" aria-label="Increase" (click)=onIncrement($index)>
+                </div>
+              </div>
+
+              <div class="quantity-button">
+                <div class="btn btn-update">
+                  <input type="submit" value="UPDATE" />
+                </div>
+              </div>
+              <div class="update-msg">
+                @if(lastIndexUpdate() == $index){
+                    {{updateMsg()}}
+                  }
+              </div>
+
+            </div>
+
+          </form>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>

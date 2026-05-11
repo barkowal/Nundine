@@ -3,6 +3,7 @@ package com.barkowal.nundine.services.impl;
 import com.barkowal.nundine.domain.entities.Inventory;
 import com.barkowal.nundine.domain.entities.User;
 import com.barkowal.nundine.exceptions.CreateAccountBalanceException;
+import com.barkowal.nundine.exceptions.InventoryNotFoundException;
 import com.barkowal.nundine.repositories.InventoryRepository;
 import com.barkowal.nundine.services.InventoryService;
 import lombok.RequiredArgsConstructor;
@@ -27,5 +28,17 @@ public class InventoryServiceImpl implements InventoryService {
         newInventory.setOwner(user);
 
         return inventoryRepository.save(newInventory);
+    }
+
+    @Override
+    public Inventory getInventory(UUID userId) {
+        return inventoryRepository.findByOwnerId(userId).orElseThrow(()->
+                new InventoryNotFoundException("User's inventory not found."));
+    }
+
+    @Override
+    public Inventory getInventoryByInventoryId(UUID inventoryId) {
+        return inventoryRepository.findById(inventoryId).orElseThrow(()->
+                new InventoryNotFoundException("Inventory not found."));
     }
 }

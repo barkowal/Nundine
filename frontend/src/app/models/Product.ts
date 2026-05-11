@@ -29,3 +29,17 @@ export type UpdateProductRequest = {
   currentPrice: number,
   category: string
 }
+
+export type ProductStock = {
+  productId: string,
+  inventoryId: string,
+  name: string,
+  image: string,
+  currentPrice: number,
+  category: Category
+  quantity: number
+}
+
+export type UpdateProductStockRequest = {
+  quantity: number,
+}

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CreateProductRequest, UpdateProductRequest } from '../models/Product';
+import { CreateProductRequest, UpdateProductRequest, UpdateProductStockRequest } from '../models/Product';
 
 @Injectable({
   providedIn: 'root',
@@ -28,6 +28,14 @@ export class ProductService {
 
   deleteProduct(productId: string) {
     return this.http.delete(`${this.baseUrl}/product/${productId}`);
+  }
+
+  getProductsStock(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/product/stock`);
+  }
+
+  updateProductStock(productId: string, req: UpdateProductStockRequest): Observable<any> {
+    return this.http.put(`${this.baseUrl}/product/stock/${productId}`, req);
   }
 
   // TODO:

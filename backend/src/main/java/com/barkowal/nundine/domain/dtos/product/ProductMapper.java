@@ -3,6 +3,7 @@ package com.barkowal.nundine.domain.dtos.product;
 import com.barkowal.nundine.domain.dtos.category.GetCategoryResponseDTO;
 import com.barkowal.nundine.domain.dtos.user.GetUserResponseDTO;
 import com.barkowal.nundine.domain.entities.Product;
+import com.barkowal.nundine.domain.entities.ProductStock;
 
 public interface ProductMapper {
     CreateProductRequest toCreateProductRequest(CreateProductRequestDTO dto);
@@ -19,4 +20,12 @@ public interface ProductMapper {
             GetCategoryResponseDTO category,
             GetUserResponseDTO user
     );
+
+    GetProductsStockResponseDTO toGetProductsStockResponseDTO(
+            Product product,
+            GetCategoryResponseDTO category,
+            ProductStock productStock
+    );
+
+    UpdateProductStockRequest toUpdateProductStockRequest(UpdateProductStockRequestDTO dto);
 }

@@ -3,6 +3,7 @@ package com.barkowal.nundine.domain.dtos.product;
 import com.barkowal.nundine.domain.dtos.category.GetCategoryResponseDTO;
 import com.barkowal.nundine.domain.dtos.user.GetUserResponseDTO;
 import com.barkowal.nundine.domain.entities.Product;
+import com.barkowal.nundine.domain.entities.ProductStock;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -69,5 +70,27 @@ public class ProductMapperImpl implements ProductMapper{
                 category,
                 user
         );
+    }
+
+    // TODO: if there is no inventory, throw an exception?
+    @Override
+    public GetProductsStockResponseDTO toGetProductsStockResponseDTO(Product product, GetCategoryResponseDTO category, ProductStock productStock) {
+        Long quantity = productStock != null? productStock.getQuantity() : 0L;
+        UUID inventoryId = productStock != null? productStock.getInventoryId().getId() : null;
+
+        return new GetProductsStockResponseDTO(
+                product.getId(),
+                inventoryId,
+                product.getName(),
+                product.getImage(),
+                product.getCurrentPrice(),
+                category,
+                quantity
+        );
+    }
+
+    @Override
+    public UpdateProductStockRequest toUpdateProductStockRequest(UpdateProductStockRequestDTO dto) {
+        return new UpdateProductStockRequest(dto.quantity());
     }
 }

@@ -5,9 +5,11 @@ import com.barkowal.nundine.domain.dtos.category.GetCategoryResponseDTO;
 import com.barkowal.nundine.domain.dtos.product.*;
 import com.barkowal.nundine.domain.dtos.user.GetUserResponseDTO;
 import com.barkowal.nundine.domain.dtos.user.UserMapper;
+import com.barkowal.nundine.domain.entities.Inventory;
 import com.barkowal.nundine.domain.entities.Product;
+import com.barkowal.nundine.domain.entities.ProductStock;
+import com.barkowal.nundine.services.InventoryService;
 import com.barkowal.nundine.services.ProductService;
-import com.nimbusds.jwt.JWT;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,7 @@ import com.barkowal.nundine.utils.JWTUtil;
 @CrossOrigin(origins = "*")
 public class ProductController {
     private final ProductService productService;
+    private final InventoryService inventoryService;
     private final ProductMapper productMapper;
     private final UserMapper userMapper;
     private final CategoryMapper categoryMapper;
@@ -81,5 +84,41 @@ public class ProductController {
         UUID userId = JWTUtil.parseUserId(jwt);
         this.productService.deleteProduct(productId, userId);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(path = "/stock")
+    public ResponseEntity<List<GetProductsStockResponseDTO>> getProductsStock(
+            @AuthenticationPrincipal Jwt jwt
+    ){
+        UUID userId = JWTUtil.parseUserId(jwt);
+        List<Product> products = productService.getProducts(userId);
+        Inventory userInventory = inventoryService.getInventory(userId);
+
+        List<GetProductsStockResponseDTO> response = products.stream()
+                .map(product -> {
+                    GetCategoryResponseDTO categoryResponseDTO = categoryMapper.toGetCategoryResponseDTO(product.getCategory());
+                    ProductStock stock = productService.getProductStock(product.getId(), userInventory.getId());
+                    return productMapper.toGetProductsStockResponseDTO(product, categoryResponseDTO, stock);
+                }).toList();
+
+        return ResponseEntity.ok(response);
+    }
+
+    // NOTE: I think it's better to get inventoryId from jwt token,
+    // so only the inventory owner can update the product stock
+    @PutMapping(path = "/stock/{productId}")
+    public ResponseEntity<Void> updateProductStock(
+            @AuthenticationPrincipal Jwt jwt,
+            @PathVariable UUID productId,
+            @Valid @RequestBody UpdateProductStockRequestDTO updateProductStockRequestDTO) {
+
+        UUID userId = JWTUtil.parseUserId(jwt);
+        Inventory userInventory = inventoryService.getInventory(userId);
+        UpdateProductStockRequest updateProductStockRequest =
+                productMapper.toUpdateProductStockRequest(updateProductStockRequestDTO);
+
+        productService.updateProductStock(productId, userInventory.getId(), updateProductStockRequest);
+
+        return ResponseEntity.ok(null);
     }
 }
