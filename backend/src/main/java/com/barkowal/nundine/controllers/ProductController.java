@@ -121,4 +121,20 @@ public class ProductController {
 
         return ResponseEntity.ok(null);
     }
+
+    @GetMapping(path = "/shop")
+    public ResponseEntity<List<GetShopProductResponseDTO>> getShopProducts(){
+        List<Inventory> sellerInventories = inventoryService.getInventoriesByOwnerRole("seller");
+        List<ProductStock> stocks = sellerInventories.stream()
+                .flatMap(inventory ->
+                        productService.getAllProductStocksByInventory(inventory).stream()).toList();
+
+        List<GetShopProductResponseDTO> response = stocks.stream()
+                .map(stock -> {
+                    GetCategoryResponseDTO categoryResponseDTO = categoryMapper.toGetCategoryResponseDTO(stock.getProductId().getCategory());
+                    return productMapper.toGetShopProductResponseDTO(stock, categoryResponseDTO);
+                }).toList();
+
+        return ResponseEntity.ok(response);
+    }
 }

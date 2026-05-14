@@ -1,0 +1,28 @@
+<form (submit)="buyProduct()" #postForm="ngForm">
+
+  <div class="number-control">
+
+    <div class="quantity-input">
+      <div class="btn decrement" aria-label="Decrease" (click)=onDecrement()>
+      </div>
+
+      <input class="number-input" type="number" value={{quantity()}} (input)="onInputChange($event)" min="0"
+        max={{product.quantity}} />
+
+      <div class="btn increment" aria-label="Increase" (click)=onIncrement()>
+      </div>
+    </div>
+
+    <div class="quantity-button">
+      <div class="btn btn-buy">
+        <input type="submit" value="BUY" />
+      </div>
+    </div>
+
+    <div class="msg">
+      {{message()}}
+    </div>
+
+  </div>
+
+</form>

@@ -9,6 +9,7 @@
         <th class="col-name">PRODUCT</th>
         <th class="col-desc">DESCRIPTION</th>
         <th class="col-price">PRICE</th>
+        <th class="col-quantity">QUANTITY</th>
         @if (isAuthenticated()){
           <th class="col-operation">OPERATION</th>
         }
@@ -27,8 +28,9 @@
           </td>
           <td class="col-desc">{{product.description}}</td>
           <td class="col-price">{{product.currentPrice}}g</td>
+          <td class="col-quantity">{{product.quantity}}</td>
           @if (isAuthenticated()){
-            <td class="col-operation">BUY</td>
+            <td class="col-operation"><app-buy-product-form [product]=product /></td>
           }
         </tr>
         }

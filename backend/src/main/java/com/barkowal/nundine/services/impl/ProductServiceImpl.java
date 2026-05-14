@@ -66,6 +66,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Product getProductById(UUID productId) {
+        return productRepository.findById(productId).orElse(null);
+    }
+
+    @Override
     @Transactional
     public Product updateProduct(UUID supplierID, UpdateProductRequest updateProductRequest) {
         Category category = categoryRepository.findById(updateProductRequest.category())
@@ -106,6 +111,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductStock getProductStock(UUID productId, UUID inventoryId) {
         return productStockRepository.findByIdProductIdAndIdInventoryId(productId, inventoryId).orElse(null);
+    }
+
+    @Override
+    public List<ProductStock> getAllProductStocksByInventory(Inventory inventory) {
+        return productStockRepository.findAllByInventoryId(inventory);
     }
 
     // NOTE: On first update, if there is no product stock,

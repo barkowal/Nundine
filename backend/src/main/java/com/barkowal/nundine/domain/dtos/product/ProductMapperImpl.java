@@ -93,4 +93,22 @@ public class ProductMapperImpl implements ProductMapper{
     public UpdateProductStockRequest toUpdateProductStockRequest(UpdateProductStockRequestDTO dto) {
         return new UpdateProductStockRequest(dto.quantity());
     }
+
+    @Override
+    public GetShopProductResponseDTO toGetShopProductResponseDTO(ProductStock productStock, GetCategoryResponseDTO category) {
+        Product product = productStock.getProductId();
+        return new GetShopProductResponseDTO(
+                product.getId(),
+                product.getName(),
+                product.getDescription(),
+                product.getImage(),
+                product.getCurrentPrice(),
+                product.getCreatedAt(),
+                product.getUpdatedAt(),
+                category,
+                productStock.getQuantity(),
+                productStock.getInventoryId().getId(),
+                productStock.getInventoryId().getOwner().getId()
+        );
+    }
 }

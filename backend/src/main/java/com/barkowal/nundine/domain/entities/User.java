@@ -12,6 +12,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -31,6 +32,9 @@ public class User {
 
     @Column(name="email", nullable=false)
     private String email;
+
+    @Column(name="roles", nullable=false)
+    private List<String> roles;
 
     @CreatedDate
     @Column(name = "created_at", updatable = false, nullable = false)

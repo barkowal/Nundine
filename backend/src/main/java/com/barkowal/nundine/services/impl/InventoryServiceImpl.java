@@ -9,6 +9,7 @@ import com.barkowal.nundine.services.InventoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -34,6 +35,11 @@ public class InventoryServiceImpl implements InventoryService {
     public Inventory getInventory(UUID userId) {
         return inventoryRepository.findByOwnerId(userId).orElseThrow(()->
                 new InventoryNotFoundException("User's inventory not found."));
+    }
+
+    @Override
+    public List<Inventory> getInventoriesByOwnerRole(String role) {
+        return this.inventoryRepository.findAllByOwnerRoleMember(role);
     }
 
     @Override

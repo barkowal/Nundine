@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CreateProductRequest, UpdateProductRequest, UpdateProductStockRequest } from '../models/Product';
+import { BuyProductRequest, CreateProductRequest, UpdateProductRequest, UpdateProductStockRequest } from '../models/Product';
 
 @Injectable({
   providedIn: 'root',
@@ -38,7 +38,11 @@ export class ProductService {
     return this.http.put(`${this.baseUrl}/product/stock/${productId}`, req);
   }
 
-  // TODO:
-  // buyProduct(productId: string): Observable<any> {
-  // }
+  getShopProducts(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/product/shop`);
+  }
+
+  buyProduct(req: BuyProductRequest): Observable<any> {
+    return this.http.post(`${this.baseUrl}/order`, req)
+  }
 }

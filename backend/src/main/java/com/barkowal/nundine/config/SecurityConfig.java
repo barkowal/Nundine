@@ -22,6 +22,7 @@ public class SecurityConfig {
                 authorize
                         .requestMatchers("/category").permitAll()
                         .requestMatchers(HttpMethod.GET,"/product").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/product/shop").permitAll()
                         .requestMatchers("/product").authenticated()
                         .anyRequest().authenticated())
                 .csrf(csrf -> csrf.disable())

@@ -79,9 +79,19 @@ section {
 
     .col-price {
       width: 90px;
-      text-align: right;
+      text-align: center;
       color: $accent;
       font-weight: 700;
+    }
+
+    .col-quantity {
+      text-align: center;
+      color: $text;
+      font-weight: 700;
+    }
+
+    .col-operation {
+      @include variables.flex-center;
     }
 
     .name-row {

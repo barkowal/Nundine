@@ -36,4 +36,13 @@ public class AccountBalanceServiceImpl implements AccountBalanceService {
         return accountBalanceRepository.findByUserId(userId).orElseThrow(() ->
             new AccountBalanceNotFoundException("Account balance not found.")).getBalance();
     }
+
+    @Override
+    public Long setAccountBalance(UUID userId, Long newBalance) {
+        AccountBalance userBalance = accountBalanceRepository.findByUserId(userId).orElseThrow(() ->
+                new AccountBalanceNotFoundException("Account balance not found."));
+
+        userBalance.setBalance(newBalance);
+        return this.accountBalanceRepository.save(userBalance).getBalance();
+    }
 }

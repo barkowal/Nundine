@@ -1,0 +1,108 @@
+@use "variables";
+@use "sass:color";
+
+$size: 16px;
+$btn-size: 24px;
+$gap: 8px;
+$border: #d7b97f;
+$bg: #332370;
+$bg-color: #b88f4f;
+$btn-bg: #d7b97f;
+$btn-hover: #e0c79a;
+$blue-button: #6b8aa3;
+$blue-button-border: #557285;
+
+@mixin button-style($bg-color, $border-color) {
+  @include variables.flex-center;
+  background-color: $bg-color;
+  border: 4px solid $border-color;
+  border-radius: 4px;
+  width: 64px;
+  height: 24px;
+  cursor: pointer;
+
+  &:hover {
+    background: color.adjust($bg-color, $lightness: -5%);
+  }
+}
+
+@mixin arrow-button {
+  background-size: $btn-size;
+  width: $btn-size;
+  height: $btn-size;
+}
+
+.number-control {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 120px;
+
+  .quantity-input {
+    display: inline-flex;
+    align-items: center;
+    gap: $gap;
+    padding: 6px;
+
+    .btn {
+      width: $size;
+      height: $size;
+      cursor: pointer;
+    }
+
+    .increment {
+      @include arrow-button();
+      background-image: variables.$ArrowRightIcon;
+
+      &:hover {
+        background-image: variables.$ArrowRightIconHover;
+      }
+    }
+
+    .decrement {
+      @include arrow-button();
+      background-image: variables.$ArrowLeftIcon;
+
+      &:hover {
+        background-image: variables.$ArrowLeftIconHover;
+      }
+    }
+
+    .number-input {
+      font-family: "Mana Trunk";
+      color: #ffffff;
+      width: 40px;
+      height: $size;
+      padding: 6px 10px;
+      border: 1px solid $border;
+      border-radius: 4px;
+      text-align: center;
+      font-size: 16px;
+      appearance: none;
+      -moz-appearance: textfield;
+      background: $bg;
+    }
+  }
+
+  .btn-buy {
+    @include button-style($blue-button, $blue-button-border );
+
+    input[type="submit"] {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      border: none;
+      outline: none;
+      background: transparent;
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+      font: inherit;
+      color: inherit;
+      vertical-align: middle;
+      cursor: pointer;
+    }
+  }
+}

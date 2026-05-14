@@ -8,5 +8,6 @@ import java.util.UUID;
 public interface UserService {
     public boolean userExists(UUID userId);
     public User createUser(UUID userId, Jwt jwt);
+    public User getUser(UUID userId);
 
 }

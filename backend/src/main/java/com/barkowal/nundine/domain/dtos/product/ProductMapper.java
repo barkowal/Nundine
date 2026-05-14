@@ -28,4 +28,6 @@ public interface ProductMapper {
     );
 
     UpdateProductStockRequest toUpdateProductStockRequest(UpdateProductStockRequestDTO dto);
+
+    GetShopProductResponseDTO toGetShopProductResponseDTO(ProductStock productStock, GetCategoryResponseDTO category);
 }
