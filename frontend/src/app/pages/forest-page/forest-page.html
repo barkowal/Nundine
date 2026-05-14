@@ -1,0 +1,27 @@
+<section>
+  <div class="enemy">
+
+    <div class="health-bar">
+      <div class="health-rect" [style.width]="enemyHealth()" [attr.aria-valuenow]="enemyHealth()">
+
+        <div class="fill" [style.width.%]="enemyHealth()" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+          [attr.aria-valuenow]="enemyHealth()">
+        </div>
+
+      </div>
+    </div>
+
+    <div class="enemy-sprite" [style.background-image]="enemySprite()" (click)=onAttack()>
+    </div>
+  </div>
+
+  <form (submit)=collectGold() class="prize-form" #postForm="ngForm">
+    <div class="gold-prize">
+      GOLD: {{prizeGold()}}
+    </div>
+    <div class="submit-button">
+      <input type="submit" value="COLLECT" />
+    </div>
+  </form>
+
+</section>

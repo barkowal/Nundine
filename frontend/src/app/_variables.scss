@@ -1,3 +1,5 @@
+@use "sass:color";
+
 $root-bg-color: #25131a;
 $root-height: 720px;
 $root-width: 1280px;
@@ -33,6 +35,9 @@ $HomePageBackground: url("/assets/ForestRoad.png");
 $DefaultPageBackground: url("/assets/ForestRoad.png"); // TODO: find/make backgrounds for different pages
 $DefaultSheetContainer: url("/assets/ManaSlicesSheet.png");
 $PanelContainerBackground: url("/assets/ManaSoulSliceLarge.png");
+$DefaultEnemy: url("/assets/enemies/centaur.png");
+$DefaultEnemyDamaged: url("/assets/enemies/centaur_damage.png");
+$HealthBar: url("/assets/DragonBar.png");
 
 // Icons
 $LoginIcon: url("/assets/icons/LoginIcon.png");
@@ -58,4 +63,18 @@ $ArrowRightIconHover: url("/assets/icons/ArrowRightHover.png");
 @mixin pixelated {
   image-rendering: pixelated;
   image-rendering: crisp-edges;
+}
+
+@mixin button-style($bg-color, $border-color, $width, $height) {
+  @include flex-center;
+  background-color: $bg-color;
+  border: 4px solid $border-color;
+  border-radius: 4px;
+  width: $width;
+  height: $height;
+  cursor: pointer;
+
+  &:hover {
+    background: color.adjust($bg-color, $lightness: -5%);
+  }
 }

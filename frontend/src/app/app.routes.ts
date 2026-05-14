@@ -6,6 +6,7 @@ import { NotfoundPage } from './pages/notfound-page/notfound-page';
 import { InformationPage } from './pages/information-page/information-page';
 import { ShopPage } from './pages/shop-page/shop-page';
 import { MyStorePage } from './pages/my-store-page/my-store-page';
+import { ForestPage } from './pages/forest-page/forest-page';
 
 export const routes: Routes = [
   {
@@ -31,6 +32,10 @@ export const routes: Routes = [
     component: MyStorePage,
     canActivate: [canActivateAuthRole],
     data: { role: "seller" },
+  },
+  {
+    path: "forest",
+    component: ForestPage,
   },
   {
     path: 'forbidden',

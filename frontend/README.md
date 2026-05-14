@@ -10,3 +10,4 @@ WIP
 - ForestRoad: ansimuz, https://opengameart.org/content/sideview-fantasy-patreon-collection
 - Icons: https://nikoichu.itch.io/pixel-icons
 - Kenney ui pack: https://kenney.nl/assets/ui-pack-adventure
+- Enemies: https://ansimuz.itch.io/gothicvania-patreon-collection

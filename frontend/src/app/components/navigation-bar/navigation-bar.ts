@@ -22,16 +22,16 @@ export class NavigationBar {
       link: ""
     },
     {
-      name: "PRODUCTS",
-      link: "/products"
-    },
-    {
       name: "INVENTORY",
       link: "/inventory"
     },
     {
       name: "SHOP",
       link: "/shop"
+    },
+    {
+      name: "FOREST",
+      link: "/forest"
     },
   ]);
 }
