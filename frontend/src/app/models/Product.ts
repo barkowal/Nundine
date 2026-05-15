@@ -34,6 +34,7 @@ export type ProductStock = {
   productId: string,
   inventoryId: string,
   name: string,
+  description: string,
   image: string,
   currentPrice: number,
   category: Category

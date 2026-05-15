@@ -22,9 +22,8 @@ public interface ProductMapper {
     );
 
     GetProductsStockResponseDTO toGetProductsStockResponseDTO(
-            Product product,
-            GetCategoryResponseDTO category,
-            ProductStock productStock
+            ProductStock productStock,
+            GetCategoryResponseDTO category
     );
 
     UpdateProductStockRequest toUpdateProductStockRequest(UpdateProductStockRequestDTO dto);

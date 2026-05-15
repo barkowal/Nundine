@@ -1,12 +1,13 @@
 import { Routes } from '@angular/router';
 import { HomePage } from './pages/home-page/home-page';
-import { canActivateAuthRole } from './auth.guard';
+import { canActivateAuth, canActivateAuthRole } from './auth.guard';
 import { ForbiddenPage } from './pages/forbidden-page/forbidden-page';
 import { NotfoundPage } from './pages/notfound-page/notfound-page';
 import { InformationPage } from './pages/information-page/information-page';
 import { ShopPage } from './pages/shop-page/shop-page';
 import { MyStorePage } from './pages/my-store-page/my-store-page';
 import { ForestPage } from './pages/forest-page/forest-page';
+import { InventoryPage } from './pages/inventory-page/inventory-page';
 
 export const routes: Routes = [
   {
@@ -15,9 +16,8 @@ export const routes: Routes = [
   },
   {
     path: "inventory",
-    component: HomePage,
-    canActivate: [canActivateAuthRole],
-    data: { role: "user" },
+    component: InventoryPage,
+    canActivate: [canActivateAuth],
   },
   {
     path: 'shop',

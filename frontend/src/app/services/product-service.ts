@@ -34,6 +34,10 @@ export class ProductService {
     return this.http.get(`${this.baseUrl}/product/stock`);
   }
 
+  getInventoryProducts(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/product/inventory`);
+  }
+
   updateProductStock(productId: string, req: UpdateProductStockRequest): Observable<any> {
     return this.http.put(`${this.baseUrl}/product/stock/${productId}`, req);
   }

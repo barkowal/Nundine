@@ -110,7 +110,11 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductStock getProductStock(UUID productId, UUID inventoryId) {
-        return productStockRepository.findByIdProductIdAndIdInventoryId(productId, inventoryId).orElse(null);
+        ProductStock productStock= productStockRepository.findByIdProductIdAndIdInventoryId(productId, inventoryId).orElse(null);
+        if(productStock == null){
+            productStock = createProductStock(productId, inventoryId);
+        }
+        return productStock;
     }
 
     @Override

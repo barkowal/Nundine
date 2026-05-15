@@ -98,7 +98,7 @@ public class ProductController {
                 .map(product -> {
                     GetCategoryResponseDTO categoryResponseDTO = categoryMapper.toGetCategoryResponseDTO(product.getCategory());
                     ProductStock stock = productService.getProductStock(product.getId(), userInventory.getId());
-                    return productMapper.toGetProductsStockResponseDTO(product, categoryResponseDTO, stock);
+                    return productMapper.toGetProductsStockResponseDTO(stock, categoryResponseDTO);
                 }).toList();
 
         return ResponseEntity.ok(response);
@@ -133,6 +133,24 @@ public class ProductController {
                 .map(stock -> {
                     GetCategoryResponseDTO categoryResponseDTO = categoryMapper.toGetCategoryResponseDTO(stock.getProductId().getCategory());
                     return productMapper.toGetShopProductResponseDTO(stock, categoryResponseDTO);
+                }).toList();
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping(path = "/inventory")
+    public ResponseEntity<List<GetProductsStockResponseDTO>> getInventoryProducts(
+            @AuthenticationPrincipal Jwt jwt
+    ){
+
+        UUID userId = JWTUtil.parseUserId(jwt);
+        Inventory userInventory = inventoryService.getInventory(userId);
+        List<ProductStock> stocks = productService.getAllProductStocksByInventory(userInventory);
+
+        List<GetProductsStockResponseDTO> response = stocks.stream()
+                .map(stock -> {
+                    GetCategoryResponseDTO categoryResponseDTO = categoryMapper.toGetCategoryResponseDTO(stock.getProductId().getCategory());
+                    return productMapper.toGetProductsStockResponseDTO(stock, categoryResponseDTO);
                 }).toList();
 
         return ResponseEntity.ok(response);

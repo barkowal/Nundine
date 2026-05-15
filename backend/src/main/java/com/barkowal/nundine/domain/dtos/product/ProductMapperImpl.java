@@ -74,14 +74,21 @@ public class ProductMapperImpl implements ProductMapper{
 
     // TODO: if there is no inventory, throw an exception?
     @Override
-    public GetProductsStockResponseDTO toGetProductsStockResponseDTO(Product product, GetCategoryResponseDTO category, ProductStock productStock) {
-        Long quantity = productStock != null? productStock.getQuantity() : 0L;
-        UUID inventoryId = productStock != null? productStock.getInventoryId().getId() : null;
+    public GetProductsStockResponseDTO toGetProductsStockResponseDTO(ProductStock productStock, GetCategoryResponseDTO category ) {
+
+        if(productStock == null){
+            throw new NullPointerException("Product stock cannot be null");
+        }
+
+        Product product = productStock.getProductId();
+        Long quantity = productStock.getQuantity() != null? productStock.getQuantity() : 0L;
+        UUID inventoryId = productStock.getInventoryId() != null? productStock.getInventoryId().getId() : null;
 
         return new GetProductsStockResponseDTO(
                 product.getId(),
                 inventoryId,
                 product.getName(),
+                product.getDescription(),
                 product.getImage(),
                 product.getCurrentPrice(),
                 category,

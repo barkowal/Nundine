@@ -40,7 +40,7 @@ export class ForestPage {
     }
 
     if (!this.authService.isAuthenticated()) {
-      this.setMsg("U need to be authenticated.")
+      this.setMsg("You need to be signed in.")
       return;
     }
 

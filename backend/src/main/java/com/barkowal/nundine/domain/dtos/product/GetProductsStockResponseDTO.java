@@ -10,6 +10,7 @@ public record GetProductsStockResponseDTO(
         UUID productId,
         UUID inventoryId,
         String name,
+        String description,
         String image,
         Integer currentPrice,
         GetCategoryResponseDTO category,

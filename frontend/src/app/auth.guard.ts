@@ -25,4 +25,17 @@ const isAccessAllowed = async (
   return router.parseUrl('/forbidden');
 };
 
+const canActivate = async (
+  route: ActivatedRouteSnapshot,
+  _: RouterStateSnapshot,
+  authData: AuthGuardData
+): Promise<boolean | UrlTree> => {
+  const { authenticated } = authData;
+  if (authenticated) return true;
+
+  const router = inject(Router);
+  return router.parseUrl('/forbidden');
+}
+
 export const canActivateAuthRole = createAuthGuard<CanActivateFn>(isAccessAllowed);
+export const canActivateAuth = createAuthGuard<CanActivateFn>(canActivate);

@@ -1,7 +1,37 @@
 @use "variables";
 
-.mainPage {
-  width: 100%;
-  height: 100%;
-  border-radius: 10px;
+$container-height: 380px;
+$container-width: 520px;
+
+section {
+  width: variables.$page-width;
+  height: variables.$page-height;
+  background-image: variables.$HomePageBackground;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  @include variables.flex-center;
+  margin-left: 20px;
+  width: 720px;
+  height: 560px;
+  background-image: variables.$InventoryContainerBackground;
+}
+
+.cards-container {
+  width: $container-width;
+  height: $container-height;
+  overflow: scroll;
+  font-size: 16px;
+  line-height: 1;
+  padding: 10px;
+
+  .cards {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 4px;
+  }
 }
