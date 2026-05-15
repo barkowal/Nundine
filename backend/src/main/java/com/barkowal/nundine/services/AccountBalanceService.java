@@ -7,6 +7,7 @@ import java.util.UUID;
 
 public interface AccountBalanceService {
     public AccountBalance createAccountBalance(User user);
-    public Long getAccountBalance(UUID userId);
+    public AccountBalance getAccountBalance(UUID userId);
     public Long setAccountBalance(UUID userId, Long newBalance);
+    public AccountBalance depositToAccountBalance(UUID userId, Long balance);
 }

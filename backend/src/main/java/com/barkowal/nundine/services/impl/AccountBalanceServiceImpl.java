@@ -6,6 +6,7 @@ import com.barkowal.nundine.exceptions.AccountBalanceNotFoundException;
 import com.barkowal.nundine.exceptions.CreateAccountBalanceException;
 import com.barkowal.nundine.repositories.AccountBalanceRepository;
 import com.barkowal.nundine.services.AccountBalanceService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -32,17 +33,25 @@ public class AccountBalanceServiceImpl implements AccountBalanceService {
     }
 
     @Override
-    public Long getAccountBalance(UUID userId) {
+    public AccountBalance getAccountBalance(UUID userId) {
         return accountBalanceRepository.findByUserId(userId).orElseThrow(() ->
-            new AccountBalanceNotFoundException("Account balance not found.")).getBalance();
+            new AccountBalanceNotFoundException("Account balance not found."));
     }
 
     @Override
     public Long setAccountBalance(UUID userId, Long newBalance) {
-        AccountBalance userBalance = accountBalanceRepository.findByUserId(userId).orElseThrow(() ->
-                new AccountBalanceNotFoundException("Account balance not found."));
+        AccountBalance userBalance = getAccountBalance(userId);
 
         userBalance.setBalance(newBalance);
         return this.accountBalanceRepository.save(userBalance).getBalance();
+    }
+
+    @Override
+    @Transactional
+    public AccountBalance depositToAccountBalance(UUID userId, Long balance) {
+        AccountBalance userBalance = getAccountBalance(userId);
+
+        userBalance.setBalance(userBalance.getBalance() + balance);
+        return this.accountBalanceRepository.save(userBalance);
     }
 }

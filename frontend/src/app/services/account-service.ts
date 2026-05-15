@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { DepositAccountBalanceRequest } from '../models/AccountBalance';
 
 @Injectable({
   providedIn: 'root',
@@ -12,5 +13,9 @@ export class AccountService {
 
   getAccountBalance(): Observable<any> {
     return this.http.get(`${this.baseUrl}/accountBalance`);
+  }
+
+  depositToAccountBalance(request: DepositAccountBalanceRequest): Observable<any> {
+    return this.http.patch(`${this.baseUrl}/accountBalance/deposit`, request);
   }
 }

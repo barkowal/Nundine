@@ -54,13 +54,13 @@ public class OrderServiceImpl implements OrderService {
             cost += product.getCurrentPrice() * quantities.get(i);
         }
 
-        Long buyerBalance = this.accountBalanceService.getAccountBalance(buyerId);
+        Long buyerBalance = this.accountBalanceService.getAccountBalance(buyerId).getBalance();
         if(cost > buyerBalance){
             throw new CreateOrderException("Invalid request, cost exceeds buyers balance.");
         }
         this.accountBalanceService.setAccountBalance(buyerId, buyerBalance - cost);
 
-        Long sellerBalance = this.accountBalanceService.getAccountBalance(seller.getId());
+        Long sellerBalance = this.accountBalanceService.getAccountBalance(seller.getId()).getBalance();
         this.accountBalanceService.setAccountBalance(seller.getId(), sellerBalance + cost);
 
         for (int i = 0; i < productIds.size(); i++) {

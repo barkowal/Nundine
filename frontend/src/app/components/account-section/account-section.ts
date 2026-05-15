@@ -3,6 +3,7 @@ import { RotatingCoin } from '../rotating-coin/rotating-coin';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth-service';
 import { AccountService } from '../../services/account-service';
+import { AccountBalance } from '../../models/AccountBalance';
 
 @Component({
   selector: 'app-account-section',
@@ -16,7 +17,7 @@ export class AccountSection implements OnInit {
   signedIn = signal(true);
   username = signal("");
   seller = signal(false);
-  accountBalance = signal<number>(0);
+  accountBalance = signal<AccountBalance>({ balance: 0 });
 
   constructor() {
   }

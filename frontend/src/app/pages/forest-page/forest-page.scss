@@ -78,6 +78,7 @@ $prize-background: #b88f4f;
 $prize-border: #7a5f35;
 $submit-button-bg: #7aa76a;
 $submit-button-border: #628d50;
+$msg-color: #112d2b;
 
 .prize-form {
   display: flex;
@@ -120,5 +121,8 @@ $submit-button-border: #628d50;
     }
   }
 
-
+  .submit-msg {
+    font-size: 16px;
+    color: $msg-color;
+  }
 }
