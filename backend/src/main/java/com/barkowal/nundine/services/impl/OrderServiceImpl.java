@@ -2,12 +2,11 @@ package com.barkowal.nundine.services.impl;
 
 import com.barkowal.nundine.domain.dtos.order.CreateOrderRequest;
 import com.barkowal.nundine.domain.dtos.product.UpdateProductStockRequest;
-import com.barkowal.nundine.domain.entities.Inventory;
-import com.barkowal.nundine.domain.entities.Product;
-import com.barkowal.nundine.domain.entities.ProductStock;
-import com.barkowal.nundine.domain.entities.User;
+import com.barkowal.nundine.domain.entities.*;
 import com.barkowal.nundine.exceptions.CreateOrderException;
 import com.barkowal.nundine.exceptions.ProductNotFoundException;
+import com.barkowal.nundine.repositories.OrderProductsRepository;
+import com.barkowal.nundine.repositories.OrderRepository;
 import com.barkowal.nundine.services.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +18,9 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
+    private final OrderRepository orderRepository;
+    private final OrderProductsRepository orderProductsRepository;
+    private final UserService userService;
     private final ProductService productService;
     private final InventoryService inventoryService;
     private final AccountBalanceService accountBalanceService;
@@ -27,10 +29,15 @@ public class OrderServiceImpl implements OrderService {
     public void createOrder(UUID buyerId, CreateOrderRequest createOrderRequest){
         Inventory sellerInventory = inventoryService.getInventoryByInventoryId(createOrderRequest.inventoryId());
         User seller = sellerInventory.getOwner();
+        User buyer = userService.getUser(buyerId);
 
         List<UUID> productIds = createOrderRequest.productIds();
         List<Integer> quantities = createOrderRequest.quantities();
-        Integer cost = 0;
+        Long cost = 0L;
+
+        if(seller.getId().equals(buyerId)){
+            throw new CreateOrderException("Invalid request, Buyer and Seller cannot be the same user.");
+        }
 
         if(productIds.size() != quantities.size()){
             throw new CreateOrderException("Invalid request, productIds must be equal to quantities.");
@@ -51,8 +58,15 @@ public class OrderServiceImpl implements OrderService {
             if(product == null){
                 throw new ProductNotFoundException(String.format("Product with ID '%s' does not exist", productIds.get(i)));
             }
-            cost += product.getCurrentPrice() * quantities.get(i);
+            cost += (long) product.getCurrentPrice() * quantities.get(i);
         }
+
+        Order order = new Order();
+        order.setId(UUID.randomUUID());
+        order.setBuyer(buyer);
+        order.setSeller(seller);
+        order.setTotalAmount(cost);
+        orderRepository.save(order);
 
         Long buyerBalance = this.accountBalanceService.getAccountBalance(buyerId).getBalance();
         if(cost > buyerBalance){
@@ -75,6 +89,18 @@ public class OrderServiceImpl implements OrderService {
             // no need to create new productStock, because updateProductStock creates a new one if it's null
             req = new UpdateProductStockRequest(buyersProductQuantity + quantities.get(i));
             this.productService.updateProductStock(productIds.get(i), buyerInventory.getId(), req);
+
+            OrderProductsKey key = new OrderProductsKey();
+            key.setOrderId(order.getId());
+            key.setProductId(productIds.get(i));
+
+            OrderProducts orderProducts = new OrderProducts();
+            orderProducts.setId(key);
+            orderProducts.setProductId(sellerStock.getProductId());
+            orderProducts.setOrderId(order);
+            orderProducts.setQuantity(quantities.get(i));
+
+            orderProductsRepository.save(orderProducts);
 
         }
     }

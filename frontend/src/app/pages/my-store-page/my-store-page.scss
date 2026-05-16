@@ -95,15 +95,16 @@ section {
           }
         }
 
-        .show-coins {
-          grid-area: tileD;
-
-          @include variables.flex-center;
-
-          .tile {
-            @include tile;
-          }
-        }
+        // TODO: Make a tile for showing price changes of products
+        // .show-coins {
+        //   grid-area: tileD;
+        //
+        //   @include variables.flex-center;
+        //
+        //   .tile {
+        //     @include tile;
+        //   }
+        // }
 
       }
 

@@ -30,11 +30,11 @@ public class Order {
     @Column(name = "created_at", updatable = false, nullable = false)
     private LocalDateTime createdAt;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "buyer_id")
     private User buyer;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "seller_id")
     private User seller;
 
