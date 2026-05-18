@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -34,9 +35,18 @@ public class ProductPriceHistoryServiceImpl implements ProductPriceHistoryServic
                 product.getCurrentPrice(),
                 fromDate,
                 LocalDateTime.now(),
+                null,
                 product
         );
 
         return priceHistoryRepository.save(newPriceHistory);
     }
+
+    @Override
+    public void deleteAllProductRecords(Product product) {
+        List<ProductPriceHistory> productHistory = this.priceHistoryRepository.findAllByProductId(product.getId());
+        productHistory.forEach(this.priceHistoryRepository::delete);
+    }
+
+
 }

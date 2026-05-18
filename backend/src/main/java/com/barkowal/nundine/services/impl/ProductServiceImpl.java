@@ -16,17 +16,22 @@ import com.barkowal.nundine.repositories.UserRepository;
 import com.barkowal.nundine.services.InventoryService;
 import com.barkowal.nundine.services.ProductPriceHistoryService;
 import com.barkowal.nundine.services.ProductService;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
+    @PersistenceContext
+    private EntityManager em;
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
@@ -104,8 +109,16 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
     public void deleteProduct(UUID productId, UUID userId){
-        this.productRepository.findByIdAndSupplierId(productId, userId).ifPresent(this.productRepository::delete);
+        Product product = this.productRepository.findByIdAndSupplierId(productId, userId)
+                .orElseThrow(()->new ProductNotFoundException("Product not found."));
+
+        this.productPriceHistoryService.deleteAllProductRecords(product);
+
+        this.deleteProductStocksOfSingleProduct(product);
+
+        this.productRepository.delete(product);
     }
 
     @Override
@@ -153,10 +166,24 @@ public class ProductServiceImpl implements ProductService {
         productStock.setQuantity(0);
         productStock.setProductId(product);
         productStock.setInventoryId(inventory);
+        productStock.setDeletedAt(null);
 
         productStockRepository.save(productStock);
 
         return productStock;
+    }
+
+    @Transactional
+    private void deleteProductStocksOfSingleProduct(Product product){
+        List<ProductStock> stocks = this.productStockRepository.findAllByProductId(product);
+        stocks.forEach(stock->{
+            this.productStockRepository.softDelete(
+                    stock.getId().getProductId(),
+                    stock.getId().getInventoryId(),
+                    LocalDateTime.now());
+        });
+        em.flush();
+        em.clear();
     }
 
 
